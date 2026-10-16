@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mon Parcoursup</title>
+  <meta name="description" content="Organise tes vœux Parcoursup : priorités, notes, dates limites et un assistant pour t'aider à choisir.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231b2b65'/><path d='M9 23V9h7a5 5 0 010 10h-7' fill='none' stroke='white' stroke-width='3'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="logo">Mon Parcoursup</span>
+    </div>
+    <span class="session" id="sessionLabel"></span>
+  </header>
+
+  <main id="app">
+    <section class="view" id="view-home" data-view="home"></section>
+    <section class="view" id="view-voeux" data-view="voeux" hidden></section>
+    <section class="view" id="view-calendar" data-view="calendar" hidden></section>
+    <section class="view" id="view-profil" data-view="profil" hidden></section>
+
+    <section class="view view-chat" id="view-coach" data-view="coach" hidden>
+      <div class="chat-head">
+        <h1>Assistant</h1>
+        <p class="muted">Pose tes questions : l'assistant connaît tes vœux, tes notes et les dates. Les décisions restent les tiennes.</p>
+      </div>
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chips" id="chatChips"></div>
+      <form class="chat-form" id="chatForm">
+        <textarea id="chatInput" rows="1" placeholder="Écris ta question" aria-label="Ta question"></textarea>
+        <button type="submit" class="btn primary" id="chatSend">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Navigation">
+    <button data-tab="home" class="active">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Accueil
+    </button>
+    <button data-tab="voeux">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>Mes vœux
+    </button>
+    <button data-tab="calendar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Dates
+    </button>
+    <button data-tab="profil">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Mes notes
+    </button>
+    <button data-tab="coach">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Assistant
+    </button>
+  </nav>
+
+  <dialog id="voeuDialog">
+    <form method="dialog" id="voeuForm" class="dialog-body">
+      <h2 id="voeuDialogTitle">Ajouter un vœu</h2>
+      <label for="f-formation">Formation <span class="req">(obligatoire)</span>
+        <input id="f-formation" name="formation" required placeholder="Exemple : BUT Informatique" autocomplete="off">
+      </label>
+      <label for="f-etab">Établissement
+        <input id="f-etab" name="etablissement" placeholder="Exemple : IUT de Lyon" autocomplete="off">
+      </label>
+      <div class="row2">
+        <label for="f-ville">Ville
+          <input id="f-ville" name="ville" placeholder="Exemple : Lyon" autocomplete="off">
+        </label>
+        <label for="f-type">Type
+          <select id="f-type" name="type">
+            <option>BUT</option><option>BTS</option><option>Licence</option><option>CPGE (prépa)</option>
+            <option>École (ingénieur, commerce…)</option><option>Santé (IFSI, PASS, LAS…)</option><option>Art / Design</option><option>Autre</option>
+          </select>
+        </label>
+      </div>
+      <fieldset class="seg">
+        <legend>Pour toi, ce vœu est…</legend>
+        <label><input type="radio" name="niveau" value="ambitieux"><span>Ambitieux</span></label>
+        <label><input type="radio" name="niveau" value="realiste" checked><span>Réaliste</span></label>
+        <label><input type="radio" name="niveau" value="securite"><span>Sécurité</span></label>
+      </fieldset>
+      <fieldset class="stars-field">
+        <legend>Envie, de 1 à 5</legend>
+        <div class="stars-input" id="starsInput"></div>
+      </fieldset>
+      <label for="f-notes">Notes personnelles
+        <textarea id="f-notes" name="notes" rows="3" placeholder="Ce qui te plaît, tes questions, la date des portes ouvertes, les frais…"></textarea>
+      </label>
+      <label for="f-deadline">Date limite propre à la formation (facultatif)
+        <input id="f-deadline" name="deadline" type="date">
+      </label>
+      <div class="dialog-actions">
+        <button type="button" class="btn ghost" id="voeuCancel">Annuler</button>
+        <button type="submit" class="btn primary" value="save">Enregistrer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

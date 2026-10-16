@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Mon Parcoursup",
+    "slug": "app_test_sgimby",
+    "owner": "lahouaris-team",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lahouari.monparcoursup"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1b2b65",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "com.lahouari.monparcoursup"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
