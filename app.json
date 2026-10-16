@@ -5,7 +5,7 @@
     "owner": "lahouaris-team",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./icon.png",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
@@ -14,14 +14,19 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#1b2b65",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "foregroundImage": "./android-icon-foreground.png",
+        "backgroundImage": "./android-icon-background.png",
+        "monochromeImage": "./android-icon-monochrome.png"
       },
       "package": "com.lahouari.monparcoursup"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "65efea4b-1727-4db9-823b-714e62680902"
+      }
     }
   }
 }
